@@ -1,0 +1,20 @@
+from(bucket: "iot")
+  |> range(start: 0)  
+  |> filter(fn: (r) => r._measurement == "iot_measurements")
+
+
+mosquitto_sub -h broker -t "#" -v
+
+// exemple bune
+mosquitto_pub -h broker -t "office/temp" -m '{"temperature": 25.56, "humidity": 40.02, "timestamp": "2025-01-12T10:00:00Z"}'
+mosquitto_pub -h broker -t "office/air_quality" -m '{"CO2": 400, "PM2.5": 12.3, "timestamp": "2025-01-12T11:00:00Z"}'
+mosquitto_pub -h broker -t "building1/power" -m '{"voltage": 230.5, "current": 10.2, "power": 2355.1, "timestamp": "2025-01-12T12:00:00Z"}'
+
+mosquitto_pub -h broker -t "factory/water_flow" -m '{"flow_rate": "naasasass", "pressure": 2.8}' // exemplu prost.
+
+
+
+
+
+
+select * from iot_measurements
